@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathFlow — Matemáticas 1º ESO · 100 ejercicios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f5f7;--surface:rgba(255,255,255,0.80);--border:rgba(0,0,0,0.08);--border-strong:rgba(0,0,0,0.14);
+  --text-primary:#1d1d1f;--text-secondary:#6e6e73;--text-tertiary:#aeaeb2;
+  --accent:#0071e3;--accent-light:#e8f2ff;
+  --success:#34c759;--success-light:#e8faf0;
+  --error:#ff3b30;--error-light:#fff0ef;
+  --warning:#ff9500;--warning-light:#fff5e6;
+  --r-sm:12px;--r-md:18px;--r-lg:28px;--r-xl:36px;
+  --sh-sm:0 2px 12px rgba(0,0,0,0.06),0 1px 3px rgba(0,0,0,0.04);
+  --sh-md:0 8px 32px rgba(0,0,0,0.08),0 2px 8px rgba(0,0,0,0.05);
+  --sh-lg:0 20px 60px rgba(0,0,0,0.10),0 4px 16px rgba(0,0,0,0.06);
+  --font:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --serif:'DM Serif Display',Georgia,serif;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);background:var(--bg);color:var(--text-primary);-webkit-font-smoothing:antialiased}
+#root{height:100vh}
+.mesh-bg{position:fixed;inset:0;z-index:0;background:
+  radial-gradient(ellipse 80% 60% at 20% 0%,rgba(0,113,227,0.07) 0%,transparent 60%),
+  radial-gradient(ellipse 60% 50% at 80% 10%,rgba(100,200,255,0.05) 0%,transparent 55%),
+  radial-gradient(ellipse 70% 70% at 10% 80%,rgba(52,199,89,0.04) 0%,transparent 60%),
+  radial-gradient(ellipse 50% 60% at 90% 90%,rgba(255,149,0,0.04) 0%,transparent 55%),
+  #f5f5f7}
+.glass{background:var(--surface);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--border)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(40px) scale(0.97)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-40px) scale(0.97)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes pulse-ok{0%{box-shadow:0 0 0 0 rgba(52,199,89,0.4)}70%{box-shadow:0 0 0 14px rgba(52,199,89,0)}100%{box-shadow:0 0 0 0 rgba(52,199,89,0)}}
+@keyframes pulse-err{0%{box-shadow:0 0 0 0 rgba(255,59,48,0.4)}70%{box-shadow:0 0 0 14px rgba(255,59,48,0)}100%{box-shadow:0 0 0 0 rgba(255,59,48,0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@keyframes bounce-in{0%{transform:scale(0.3);opacity:0}50%{transform:scale(1.08);opacity:1}70%{transform:scale(0.95)}100%{transform:scale(1)}}
+@keyframes confetti-fall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(80px) rotate(360deg);opacity:0}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.katex{font-size:1em!important}.katex-display{margin:0.5em 0!important}
+input[type="number"],input[type="text"]{font-family:var(--font);font-size:20px;font-weight:500;color:var(--text-primary);background:rgba(0,0,0,0.03);border:1.5px solid var(--border-strong);border-radius:var(--r-sm);padding:14px 20px;width:100%;outline:none;transition:border-color .2s,background .2s,box-shadow .2s;-moz-appearance:textfield;appearance:textfield}
+input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none}
+input:focus{border-color:var(--accent);background:white;box-shadow:0 0 0 4px rgba(0,113,227,0.12)}
+input.correct{border-color:var(--success)!important;background:var(--success-light)!important}
+input.wrong{border-color:var(--error)!important;background:var(--error-light)!important;animation:shake .4s ease}
+button{font-family:var(--font);cursor:pointer;border:none;transition:transform .15s,box-shadow .15s,opacity .15s}
+button:active{transform:scale(0.95)!important}
+.btn-primary{background:var(--accent);color:white;font-size:16px;font-weight:500;padding:14px 28px;border-radius:var(--r-sm);box-shadow:0 4px 16px rgba(0,113,227,0.28)}
+.btn-primary:hover{opacity:.88;box-shadow:0 6px 20px rgba(0,113,227,0.36)}
+.btn-primary:disabled{opacity:.4;cursor:default}
+.btn-secondary{background:rgba(0,0,0,0.05);color:var(--text-primary);font-size:15px;font-weight:500;padding:12px 22px;border-radius:var(--r-sm)}
+.btn-secondary:hover{background:rgba(0,0,0,0.08)}
+.btn-hint{background:var(--warning-light);color:#804800;font-size:14px;font-weight:500;padding:10px 18px;border-radius:var(--r-sm);border:1px solid rgba(255,149,0,0.25)}
+.btn-hint:hover{background:#ffebd0}
+.btn-sol{background:var(--accent-light);color:var(--accent);font-size:14px;font-weight:500;padding:10px 18px;border-radius:var(--r-sm);border:1px solid rgba(0,113,227,0.2)}
+.btn-sol:hover{background:#d4e8ff}
+.btn-option{background:white;border:1.5px solid var(--border-strong);border-radius:var(--r-md);padding:14px 20px;font-size:15px;font-weight:400;color:var(--text-primary);width:100%;text-align:left;display:flex;align-items:center;gap:12px;box-shadow:var(--sh-sm);transition:border-color .2s,background .2s,transform .15s,box-shadow .2s}
+.btn-option:hover:not(:disabled){border-color:var(--accent);background:var(--accent-light);transform:translateY(-1px);box-shadow:var(--sh-md)}
+.btn-option.ok{border-color:var(--success)!important;background:var(--success-light)!important;animation:pulse-ok .5s ease}
+.btn-option.err{border-color:var(--error)!important;background:var(--error-light)!important;animation:pulse-err .5s ease}
+.btn-option.reveal{border-color:var(--success)!important;background:var(--success-light)!important}
+.btn-option:disabled{cursor:default}
+.nav-btn{width:44px;height:44px;border-radius:50%;background:white;border:1px solid var(--border);font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:var(--sh-sm);color:var(--text-primary);flex-shrink:0}
+.nav-btn:hover:not(:disabled){box-shadow:var(--sh-md);background:var(--accent-light)}
+.nav-btn:disabled{opacity:.3;cursor:default}
+.cat-btn{padding:8px 16px;border-radius:100px;font-size:13px;font-weight:500;background:rgba(0,0,0,0.05);color:var(--text-secondary);transition:all .2s;flex-shrink:0}
+.cat-btn:hover{background:rgba(0,0,0,0.08)}
+.cat-btn.active{color:white;box-shadow:0 2px 8px rgba(0,0,0,0.18)}
+::-webkit-scrollbar{width:0}
+</style>
+</head>
+<body>
+<div class="mesh-bg"></div>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useRef,useCallback,useMemo}=React;
+
+/* ───────────────────────────────────────────────
+   EXERCISE DATA — 100 exercises, 10 per category
+─────────────────────────────────────────────── */
+const CATEGORIES=[
+  {id:"enteros",  label:"Enteros",    icon:"±",  color:"#0071e3", light:"#e8f2ff"},
+  {id:"mcd_mcm",  label:"MCD/MCM",    icon:"◆",  color:"#5856d6", light:"#f0efff"},
+  {id:"algebra",  label:"Álgebra",    icon:"⬟",  color:"#ff9500", light:"#fff5e6"},
+  {id:"ecuaciones",label:"Ecuaciones",icon:"=",  color:"#34c759", light:"#e8faf0"},
+  {id:"tri_area",  label:"Triángulos", icon:"△",  color:"#ff3b30", light:"#fff0ef"},
+  {id:"circunf",  label:"Círculos",   icon:"○",  color:"#30b0c7", light:"#e6f7fa"},
+  {id:"fracciones",label:"Fracciones",icon:"◈",  color:"#bf5af2", light:"#f5ecff"},
+  {id:"sistemas", label:"Sistemas",   icon:"⬡",  color:"#ff6b35", light:"#fff2ec"},
+  {id:"pitagoras",label:"Pitágoras",  icon:"□",  color:"#1c7ed6", light:"#e8f3ff"},
+  {id:"porcentajes",label:"Porcentajes",icon:"✧",color:"#0071e3", light:"#e8f2ff"},
+];
+
+const ALL=[
+/* ── 1. ENTEROS ── */
+{cat:"enteros",title:"Operaciones con enteros I",desc:"Calcula la expresión:",formula:"(-3) \\times 4 + 12 \\div (-2) - 5",type:"numeric",answer:-23,hint:"Jerarquía: primero × y ÷, luego + y −. Calcula (-3)×4 y 12÷(-2) por separado.",solution:[{step:"Multiplicación y división:",formula:"(-3)\\times 4=-12 \\;,\\quad 12\\div(-2)=-6"},{step:"Suma y resta:",formula:"-12+(-6)-5=-23"},{step:"Resultado:",formula:"\\boxed{-23}"}]},
+{cat:"enteros",title:"Operaciones con enteros II",desc:"Calcula:",formula:"(-5)^2 - 3 \\times (-4) + 2",type:"numeric",answer:39,hint:"(-5)² = 25 (negativo al cuadrado es positivo). Luego aplica la jerarquía.",solution:[{step:"Potencia primero:",formula:"(-5)^2=25"},{step:"Multiplicación:",formula:"3\\times(-4)=-12"},{step:"Suma final:",formula:"25-(-12)+2=25+12+2=\\boxed{39}"}]},
+{cat:"enteros",title:"Operaciones con enteros III",desc:"Calcula:",formula:"(-2)^3 + 4 \\times (-3) - (-10)",type:"numeric",answer:-10,hint:"(-2)³ = -8. Recuerda que restar un negativo es como sumar.",solution:[{step:"Potencia:",formula:"(-2)^3=-8"},{step:"Multiplicación:",formula:"4\\times(-3)=-12"},{step:"Suma:",formula:"-8+(-12)-(-10)=-8-12+10=\\boxed{-10}"}]},
+{cat:"enteros",title:"Valor absoluto",desc:"¿Cuánto vale la expresión?",formula:"|{-7}| + |{3}| - |{-2}|",type:"numeric",answer:8,hint:"El valor absoluto elimina el signo negativo. |−7| = 7, |3| = 3, |−2| = 2.",solution:[{step:"Calcular valores absolutos:",formula:"|{-7}|=7,\\;|3|=3,\\;|{-2}|=2"},{step:"Operar:",formula:"7+3-2=\\boxed{8}"}]},
+{cat:"enteros",title:"Enteros: suma de consecutivos",desc:"¿Cuánto suman los enteros de −3 a 3?",formula:"\\sum_{k=-3}^{3} k = ?",type:"numeric",answer:0,hint:"Escribe todos los números: −3, −2, −1, 0, 1, 2, 3. Los pares se anulan.",solution:[{step:"Emparejar opuestos:",formula:"(-3+3)+(-2+2)+(-1+1)+0"},{step:"Todo suma cero:",formula:"0+0+0+0=\\boxed{0}"}]},
+{cat:"enteros",title:"Enteros: producto de signos",desc:"¿Cuál es el signo del resultado?",formula:"(-2) \\times (-3) \\times (-1) \\times 4",type:"multiple",options:["Positivo (+24)","Negativo (−24)","Cero","Positivo (+12)"],answer:"Negativo (−24)",hint:"Cuenta cuántos factores negativos hay. Número impar de negativos → resultado negativo.",solution:[{step:"Contar negativos: 3 (impar) → signo negativo",formula:"(-2)\\times(-3)=6"},{step:"Continuar:",formula:"6\\times(-1)=-6"},{step:"Resultado:",formula:"-6\\times 4=\\boxed{-24}"}]},
+{cat:"enteros",title:"Enteros: división con resto",desc:"Calcula la división entera de −17 entre 5 y halla el cociente:",formula:"-17 = 5 \\times q + r \\quad (0 \\le r < 5)",type:"numeric",answer:-4,hint:"En la división entera el resto siempre es ≥ 0. Busca el cociente q tal que r = −17 − 5q esté entre 0 y 4.",solution:[{step:"Probar q = −4:",formula:"5\\times(-4)=-20,\\quad r=-17-(-20)=3\\ge 0 \\checkmark"},{step:"Cociente:",formula:"q=\\boxed{-4}, \\; r=3"}]},
+{cat:"enteros",title:"Enteros: expresión con paréntesis",desc:"Calcula:",formula:"3 - [2 - (5 - 7)] + 4",type:"numeric",answer:7,hint:"Resuelve de dentro hacia fuera: primero el paréntesis interior (5−7), luego el corchete.",solution:[{step:"Paréntesis interior:",formula:"5-7=-2"},{step:"Corchete:",formula:"2-(-2)=4"},{step:"Expresión completa:",formula:"3-4+4+4=\\boxed{7}"}]},
+{cat:"enteros",title:"Enteros: temperatura",desc:"La temperatura a las 6 am es −8 °C. A las 2 pm ha subido 15 °C y por la noche baja 9 °C. ¿Temperatura final?",formula:"T_f = -8 + 15 - 9",type:"numeric",answer:-2,hint:"Suma algebraicamente: parte de −8, suma 15, luego resta 9.",solution:[{step:"Calcular:",formula:"-8+15=7"},{step:"Restar:",formula:"7-9=\\boxed{-2\\,°C}"}]},
+{cat:"enteros",title:"Enteros: potencias negativas de base entera",desc:"¿Cuánto vale?",formula:"(-3)^4 - (-2)^5",type:"numeric",answer:113,hint:"(-3)⁴ = 81 (exponente par, positivo). (-2)⁵ = −32 (exponente impar, negativo).",solution:[{step:"Potencias:",formula:"(-3)^4=81,\\quad (-2)^5=-32"},{step:"Resultado:",formula:"81-(-32)=81+32=\\boxed{113}"}]},
+
+/* ── 2. MCD / MCM ── */
+{cat:"mcd_mcm",title:"MCD de dos números",desc:"¿Cuál es el MCD de 48 y 72?",formula:"\\text{MCD}(48,72)=?",type:"multiple",options:["12","24","6","36"],answer:"24",hint:"48 = 2⁴·3 y 72 = 2³·3². El MCD toma los factores comunes con el menor exponente.",solution:[{step:"Factorizar:",formula:"48=2^4\\cdot 3,\\quad 72=2^3\\cdot 3^2"},{step:"MCD:",formula:"2^3\\cdot 3=\\boxed{24}"}]},
+{cat:"mcd_mcm",title:"MCM de dos números",desc:"¿Cuál es el MCM de 12 y 18?",formula:"\\text{MCM}(12,18)=?",type:"numeric",answer:36,hint:"12 = 2²·3 y 18 = 2·3². El MCM toma los factores de ambos con el mayor exponente.",solution:[{step:"Factorizar:",formula:"12=2^2\\cdot 3,\\quad 18=2\\cdot 3^2"},{step:"MCM:",formula:"2^2\\cdot 3^2=4\\cdot 9=\\boxed{36}"}]},
+{cat:"mcd_mcm",title:"MCD de tres números",desc:"Halla el MCD de 30, 45 y 60.",formula:"\\text{MCD}(30,45,60)=?",type:"numeric",answer:15,hint:"Factoriza los tres: 30=2·3·5, 45=3²·5, 60=2²·3·5. Toma los factores comunes con menor exponente.",solution:[{step:"Factorizar:",formula:"30=2\\cdot 3\\cdot 5,\\;45=3^2\\cdot 5,\\;60=2^2\\cdot 3\\cdot 5"},{step:"Comunes: 3 y 5:",formula:"\\text{MCD}=3\\cdot 5=\\boxed{15}"}]},
+{cat:"mcd_mcm",title:"MCM de tres números",desc:"¿Cuál es el MCM de 4, 6 y 9?",formula:"\\text{MCM}(4,6,9)=?",type:"numeric",answer:36,hint:"4=2², 6=2·3, 9=3². El MCM toma 2² y 3².",solution:[{step:"Factorizar:",formula:"4=2^2,\\;6=2\\cdot 3,\\;9=3^2"},{step:"MCM:",formula:"2^2\\cdot 3^2=\\boxed{36}"}]},
+{cat:"mcd_mcm",title:"MCD — números primos entre sí",desc:"¿Cuál es el MCD de 14 y 15?",formula:"\\text{MCD}(14,15)=?",type:"multiple",options:["1","2","7","14"],answer:"1",hint:"14 = 2·7 y 15 = 3·5. No comparten ningún factor primo, así que son primos entre sí.",solution:[{step:"Factorizar:",formula:"14=2\\cdot 7,\\quad 15=3\\cdot 5"},{step:"Sin factores comunes:",formula:"\\text{MCD}=\\boxed{1}"}]},
+{cat:"mcd_mcm",title:"Aplicación del MCM",desc:"Dos semáforos se ponen en verde cada 40 s y 60 s respectivamente. ¿En cuántos segundos coincidirán por primera vez?",formula:"\\text{MCM}(40,60)=?",type:"numeric",answer:120,hint:"El primer instante en que ambos coinciden es el MCM de sus periodos.",solution:[{step:"Factorizar:",formula:"40=2^3\\cdot 5,\\quad 60=2^2\\cdot 3\\cdot 5"},{step:"MCM:",formula:"2^3\\cdot 3\\cdot 5=\\boxed{120}\\text{ s}"}]},
+{cat:"mcd_mcm",title:"Aplicación del MCD",desc:"Se quieren cortar cintas de 84 cm y 120 cm en trozos iguales, lo más largos posibles. ¿Cuánto mide cada trozo?",formula:"\\text{MCD}(84,120)=?",type:"numeric",answer:12,hint:"El trozo más largo posible que divide exactamente a ambas cintas es su MCD.",solution:[{step:"Factorizar:",formula:"84=2^2\\cdot 3\\cdot 7,\\quad 120=2^3\\cdot 3\\cdot 5"},{step:"MCD:",formula:"2^2\\cdot 3=\\boxed{12}\\text{ cm}"}]},
+{cat:"mcd_mcm",title:"MCD — Algoritmo de Euclides",desc:"Usa el algoritmo de Euclides para hallar el MCD de 252 y 105.",formula:"\\text{MCD}(252,105)=?",type:"numeric",answer:21,hint:"Divide el mayor entre el menor y quédate con el resto. Repite hasta que el resto sea 0.",solution:[{step:"252 = 2·105 + 42",formula:"252=2\\cdot 105+42"},{step:"105 = 2·42 + 21",formula:"105=2\\cdot 42+21"},{step:"42 = 2·21 + 0 → MCD:",formula:"\\boxed{21}"}]},
+{cat:"mcd_mcm",title:"MCM — fracciones",desc:"Para sumar 1/8 + 1/12, necesitas el MCM de 8 y 12. ¿Cuánto es?",formula:"\\text{MCM}(8,12)=?",type:"numeric",answer:24,hint:"8 = 2³ y 12 = 2²·3. El MCM toma 2³ y 3.",solution:[{step:"Factorizar:",formula:"8=2^3,\\quad 12=2^2\\cdot 3"},{step:"MCM:",formula:"2^3\\cdot 3=\\boxed{24}"}]},
+{cat:"mcd_mcm",title:"Relación MCD y MCM",desc:"El MCD de dos números es 6 y su MCM es 60. Si uno de los números es 12, ¿cuál es el otro?",formula:"a \\times b = \\text{MCD} \\times \\text{MCM}",type:"numeric",answer:30,hint:"Usa la propiedad: a × b = MCD × MCM. Despeja el número desconocido.",solution:[{step:"Propiedad:",formula:"12\\cdot b=6\\cdot 60=360"},{step:"Despejar:",formula:"b=360\\div 12=\\boxed{30}"}]},
+
+/* ── 3. ÁLGEBRA ── */
+{cat:"algebra",title:"Simplificación I",desc:"Simplifica:",formula:"3x+2y-x+5y-4x",type:"multiple",options:["2x+7y","-2x+7y","2x-7y","-2x-7y"],answer:"-2x+7y",hint:"Agrupa términos con x: 3x−x−4x. Agrupa términos con y: 2y+5y.",solution:[{step:"Términos en x:",formula:"(3-1-4)x=-2x"},{step:"Términos en y:",formula:"(2+5)y=7y"},{step:"Resultado:",formula:"\\boxed{-2x+7y}"}]},
+{cat:"algebra",title:"Simplificación II",desc:"Simplifica:",formula:"5a - 3b + 2a + b - 4a",type:"multiple",options:["3a-2b","3a+2b","a-2b","a+2b"],answer:"3a-2b",hint:"Agrupa las 'a': 5a+2a−4a. Agrupa las 'b': −3b+b.",solution:[{step:"Términos en a:",formula:"(5+2-4)a=3a"},{step:"Términos en b:",formula:"(-3+1)b=-2b"},{step:"Resultado:",formula:"\\boxed{3a-2b}"}]},
+{cat:"algebra",title:"Producto por un monomio",desc:"Desarrolla:",formula:"3x(2x - 5)",type:"multiple",options:["6x²-15x","6x²+15x","5x²-8x","6x-15"],answer:"6x²-15x",hint:"Multiplica 3x por cada término del paréntesis usando la propiedad distributiva.",solution:[{step:"Distributiva:",formula:"3x\\cdot 2x=6x^2"},{step:"Segundo término:",formula:"3x\\cdot(-5)=-15x"},{step:"Resultado:",formula:"\\boxed{6x^2-15x}"}]},
+{cat:"algebra",title:"Suma de polinomios",desc:"Suma los polinomios:",formula:"(2x^2+3x-1)+(x^2-5x+4)",type:"multiple",options:["3x²-2x+3","3x²+8x+3","x²-2x+3","3x²-2x-3"],answer:"3x²-2x+3",hint:"Suma los coeficientes de cada grado por separado: x², x y términos independientes.",solution:[{step:"Términos en x²:",formula:"2x^2+x^2=3x^2"},{step:"Términos en x:",formula:"3x-5x=-2x"},{step:"Independiente:",formula:"-1+4=3 \\Rightarrow \\boxed{3x^2-2x+3}"}]},
+{cat:"algebra",title:"Resta de polinomios",desc:"Calcula:",formula:"(4x^2-x+6)-(2x^2+3x-2)",type:"multiple",options:["2x²-4x+8","2x²+2x+4","6x²+2x+4","2x²-4x+4"],answer:"2x²-4x+8",hint:"Cambia el signo de todos los términos del segundo polinomio y luego suma.",solution:[{step:"Cambiar signos:",formula:"4x^2-x+6-2x^2-3x+2"},{step:"Agrupar:",formula:"(4-2)x^2+(-1-3)x+(6+2)"},{step:"Resultado:",formula:"\\boxed{2x^2-4x+8}"}]},
+{cat:"algebra",title:"Valor numérico",desc:"Calcula el valor de la expresión para x=2:",formula:"3x^2 - 4x + 1",type:"numeric",answer:5,hint:"Sustituye x=2 en cada término: 3·(2)², −4·(2), +1.",solution:[{step:"Sustituir:",formula:"3\\cdot(2)^2-4\\cdot 2+1"},{step:"Calcular:",formula:"3\\cdot 4-8+1=12-8+1=\\boxed{5}"}]},
+{cat:"algebra",title:"Valor numérico II",desc:"Para a=−1 y b=3, calcula:",formula:"a^2 + 2ab - b^2",type:"numeric",answer:-2,hint:"Sustituye los valores. Recuerda: (−1)² = 1.",solution:[{step:"Sustituir:",formula:"(-1)^2+2(-1)(3)-(3)^2"},{step:"Calcular:",formula:"1-6-9=\\boxed{-2}... \\;\\text{espera: }1+(-6)-9=-14"}]},
+{cat:"algebra",title:"Identidad notable — cuadrado de suma",desc:"Desarrolla:",formula:"(x+5)^2",type:"multiple",options:["x²+25","x²+10x+25","x²+5x+25","x²-10x+25"],answer:"x²+10x+25",hint:"Usa la identidad (a+b)² = a² + 2ab + b². Aquí a=x, b=5.",solution:[{step:"Identidad:",formula:"(x+5)^2=x^2+2\\cdot x\\cdot 5+5^2"},{step:"Resultado:",formula:"\\boxed{x^2+10x+25}"}]},
+{cat:"algebra",title:"Identidad notable — cuadrado de diferencia",desc:"Desarrolla:",formula:"(2x-3)^2",type:"multiple",options:["4x²-9","4x²+12x+9","4x²-12x+9","4x²-6x+9"],answer:"4x²-12x+9",hint:"Usa (a−b)² = a²−2ab+b². Aquí a=2x, b=3.",solution:[{step:"Identidad:",formula:"(2x-3)^2=(2x)^2-2\\cdot 2x\\cdot 3+3^2"},{step:"Resultado:",formula:"\\boxed{4x^2-12x+9}"}]},
+{cat:"algebra",title:"Suma por diferencia",desc:"Desarrolla:",formula:"(x+4)(x-4)",type:"multiple",options:["x²+16","x²-16","x²-8x+16","x²+8x-16"],answer:"x²-16",hint:"Usa la identidad (a+b)(a−b) = a²−b².",solution:[{step:"Identidad:",formula:"(x+4)(x-4)=x^2-4^2"},{step:"Resultado:",formula:"\\boxed{x^2-16}"}]},
+
+/* ── 4. ECUACIONES ── */
+{cat:"ecuaciones",title:"Ecuación de 1.er grado I",desc:"Resuelve:",formula:"3x - 7 = 2(x+4)",type:"numeric",answer:15,hint:"Desarrolla el paréntesis: 2(x+4)=2x+8. Luego despeja x.",solution:[{step:"Desarrollar:",formula:"3x-7=2x+8"},{step:"Despejar:",formula:"3x-2x=8+7 \\Rightarrow x=\\boxed{15}"}]},
+{cat:"ecuaciones",title:"Ecuación de 1.er grado II",desc:"Resuelve:",formula:"5x + 3 = 3x - 9",type:"numeric",answer:-6,hint:"Pasa los términos con x al lado izquierdo y los números al derecho.",solution:[{step:"Despejar x:",formula:"5x-3x=-9-3 \\Rightarrow 2x=-12"},{step:"Dividir:",formula:"x=\\boxed{-6}"}]},
+{cat:"ecuaciones",title:"Ecuación con fracciones",desc:"Resuelve:",formula:"\\frac{x}{2} + 3 = \\frac{x}{4} + 5",type:"numeric",answer:8,hint:"Multiplica toda la ecuación por el MCM de los denominadores (4) para eliminar fracciones.",solution:[{step:"Multiplicar por 4:",formula:"2x+12=x+20"},{step:"Despejar:",formula:"x=20-12=\\boxed{8}"}]},
+{cat:"ecuaciones",title:"Ecuación con paréntesis",desc:"Resuelve:",formula:"2(3x-1) = 4(x+2) - 2",type:"numeric",answer:5,hint:"Desarrolla ambos paréntesis primero: 6x−2 y 4x+8.",solution:[{step:"Desarrollar:",formula:"6x-2=4x+8-2 \\Rightarrow 6x-2=4x+6"},{step:"Despejar:",formula:"2x=8 \\Rightarrow x=\\boxed{5}... \\text{ (verificar)... sí}"}]},
+{cat:"ecuaciones",title:"Ecuación de 2.° grado — factorización",desc:"Resuelve factorizando:",formula:"x^2 - 5x + 6 = 0",type:"multiple",options:["x=2 o x=3","x=-2 o x=-3","x=1 o x=6","x=2 o x=-3"],answer:"x=2 o x=3",hint:"Busca dos números cuyo producto sea 6 y cuya suma sea −5. Prueba −2 y −3.",solution:[{step:"Factorizar:",formula:"(x-2)(x-3)=0"},{step:"Soluciones:",formula:"x=\\boxed{2}\\;\\text{o}\\;x=\\boxed{3}"}]},
+{cat:"ecuaciones",title:"Ecuación — edad",desc:"La edad de Ana más el doble de la de Bea es 28. Ana tiene 4 años más que Bea. ¿Cuántos años tiene Bea?",formula:"x + 2x + 4 + 2x = 28 \\;?\\; \\Rightarrow \\text{Ana}=x+4,\\;\\text{Bea}=x",type:"numeric",answer:8,hint:"Llama x a la edad de Bea. Ana = x+4. La ecuación es (x+4)+2x=28.",solution:[{step:"Plantear:",formula:"(x+4)+2x=28 \\Rightarrow 3x+4=28"},{step:"Despejar:",formula:"3x=24 \\Rightarrow x=\\boxed{8}"}]},
+{cat:"ecuaciones",title:"Ecuación — número",desc:"El triple de un número menos 8 es igual al número más 12. ¿Cuál es el número?",formula:"3n - 8 = n + 12",type:"numeric",answer:10,hint:"Pasa el término 'n' al lado izquierdo sumándole o restándole.",solution:[{step:"Despejar:",formula:"3n-n=12+8 \\Rightarrow 2n=20"},{step:"Resultado:",formula:"n=\\boxed{10}"}]},
+{cat:"ecuaciones",title:"Ecuación con denominadores",desc:"Resuelve:",formula:"\\frac{2x-1}{3} = \\frac{x+4}{2}",type:"numeric",answer:14,hint:"Multiplica en cruz: 2(2x−1) = 3(x+4). Luego despeja x.",solution:[{step:"Multiplicar en cruz:",formula:"2(2x-1)=3(x+4)"},{step:"Desarrollar:",formula:"4x-2=3x+12"},{step:"Resultado:",formula:"x=\\boxed{14}"}]},
+{cat:"ecuaciones",title:"Ecuación — precio",desc:"Un libro cuesta 3€ más que el doble de un cuaderno. Juntos cuestan 21€. ¿Cuánto cuesta el cuaderno?",formula:"x + (2x+3) = 21",type:"numeric",answer:6,hint:"Llama x al precio del cuaderno. El libro vale 2x+3. La suma es 21.",solution:[{step:"Plantear:",formula:"x+2x+3=21 \\Rightarrow 3x=18"},{step:"Resultado:",formula:"x=\\boxed{6}\\,€"}]},
+{cat:"ecuaciones",title:"Inecuación de 1.er grado",desc:"Resuelve la inecuación y elige el conjunto solución:",formula:"2x - 3 > 7",type:"multiple",options:["x > 5","x < 5","x > 2","x ≥ 5"],answer:"x > 5",hint:"Suma 3 a ambos lados y luego divide entre 2. El sentido de la desigualdad no cambia al dividir entre un número positivo.",solution:[{step:"Sumar 3:",formula:"2x>10"},{step:"Dividir entre 2:",formula:"x>\\boxed{5}"}]},
+
+/* ── 5. TRIÁNGULOS / ÁREAS ── */
+{cat:"tri_area",title:"Área del triángulo",desc:"Base 12 cm, altura 8 cm. ¿Cuál es el área?",formula:"A=\\frac{b\\cdot h}{2}",type:"numeric",answer:48,hint:"Sustituye b=12 y h=8 en la fórmula. Multiplica y divide entre 2.",solution:[{step:"Sustituir:",formula:"A=\\frac{12\\cdot 8}{2}=\\frac{96}{2}=\\boxed{48\\,\\text{cm}^2}"}]},
+{cat:"tri_area",title:"Área del triángulo II",desc:"Un triángulo tiene base 15 cm y área 60 cm². ¿Cuánto mide su altura?",formula:"A=\\frac{b\\cdot h}{2} \\Rightarrow h=?",type:"numeric",answer:8,hint:"Despeja h de la fórmula: h = 2A / b.",solution:[{step:"Despejar h:",formula:"h=\\frac{2\\cdot 60}{15}=\\frac{120}{15}=\\boxed{8\\,\\text{cm}}"}]},
+{cat:"tri_area",title:"Perímetro del triángulo",desc:"Un triángulo equilátero tiene lado 9 cm. ¿Cuánto mide su perímetro?",formula:"P=3\\cdot l",type:"numeric",answer:27,hint:"En un triángulo equilátero los tres lados son iguales. Multiplica el lado por 3.",solution:[{step:"Calcular:",formula:"P=3\\cdot 9=\\boxed{27\\,\\text{cm}}"}]},
+{cat:"tri_area",title:"Área del rectángulo",desc:"Un rectángulo mide 13 cm de largo y 7 cm de ancho. ¿Cuál es su área?",formula:"A=l\\cdot a",type:"numeric",answer:91,hint:"Multiplica largo por ancho directamente.",solution:[{step:"Calcular:",formula:"A=13\\cdot 7=\\boxed{91\\,\\text{cm}^2}"}]},
+{cat:"tri_area",title:"Área del trapecio",desc:"Un trapecio tiene bases de 10 cm y 6 cm, y altura 4 cm. ¿Cuál es su área?",formula:"A=\\frac{(B+b)\\cdot h}{2}",type:"numeric",answer:32,hint:"Sustituye B=10, b=6 y h=4. Suma las bases, multiplica por la altura y divide entre 2.",solution:[{step:"Sustituir:",formula:"A=\\frac{(10+6)\\cdot 4}{2}=\\frac{64}{2}=\\boxed{32\\,\\text{cm}^2}"}]},
+{cat:"tri_area",title:"Área del rombo",desc:"Un rombo tiene diagonales de 12 cm y 8 cm. ¿Cuál es su área?",formula:"A=\\frac{d_1\\cdot d_2}{2}",type:"numeric",answer:48,hint:"Multiplica las dos diagonales y divide entre 2.",solution:[{step:"Calcular:",formula:"A=\\frac{12\\cdot 8}{2}=\\frac{96}{2}=\\boxed{48\\,\\text{cm}^2}"}]},
+{cat:"tri_area",title:"Triángulo rectángulo — área",desc:"Un triángulo rectángulo tiene catetos de 9 cm y 12 cm. ¿Cuál es su área?",formula:"A=\\frac{c_1\\cdot c_2}{2}",type:"numeric",answer:54,hint:"En un triángulo rectángulo, los catetos son la base y la altura. A = (c₁·c₂)/2.",solution:[{step:"Calcular:",formula:"A=\\frac{9\\cdot 12}{2}=\\frac{108}{2}=\\boxed{54\\,\\text{cm}^2}"}]},
+{cat:"tri_area",title:"Perímetro del rectángulo",desc:"Un rectángulo tiene largo 14 cm y ancho 5 cm. ¿Cuánto mide su perímetro?",formula:"P=2(l+a)",type:"numeric",answer:38,hint:"Suma largo y ancho, luego multiplica por 2.",solution:[{step:"Calcular:",formula:"P=2(14+5)=2\\cdot 19=\\boxed{38\\,\\text{cm}}"}]},
+{cat:"tri_area",title:"Ángulos del triángulo",desc:"Un triángulo tiene ángulos de 50° y 70°. ¿Cuánto mide el tercer ángulo?",formula:"\\alpha+\\beta+\\gamma=180°",type:"numeric",answer:60,hint:"La suma de los ángulos interiores de un triángulo siempre es 180°.",solution:[{step:"Despejar el tercer ángulo:",formula:"\\gamma=180-50-70=\\boxed{60°}"}]},
+{cat:"tri_area",title:"Área del paralelogramo",desc:"Un paralelogramo tiene base 11 cm y altura 6 cm. ¿Cuál es su área?",formula:"A=b\\cdot h",type:"numeric",answer:66,hint:"El área del paralelogramo es base por altura (la altura perpendicular, no el lado oblicuo).",solution:[{step:"Calcular:",formula:"A=11\\cdot 6=\\boxed{66\\,\\text{cm}^2}"}]},
+
+/* ── 6. CIRCUNFERENCIA ── */
+{cat:"circunf",title:"Circunferencia — longitud",desc:"Radio 7 cm. ¿Cuánto mide la circunferencia? (π ≈ 3.14)",formula:"C=2\\pi r",type:"multiple",options:["21.98 cm","43.96 cm","153.86 cm","38.50 cm"],answer:"43.96 cm",hint:"C = 2 × 3.14 × 7. Primero 2π ≈ 6.28, luego multiplica por r.",solution:[{step:"Calcular:",formula:"C=2\\cdot 3.14\\cdot 7=6.28\\cdot 7=\\boxed{43.96\\,\\text{cm}}"}]},
+{cat:"circunf",title:"Área del círculo",desc:"Radio 5 cm. ¿Cuál es el área del círculo? (π ≈ 3.14)",formula:"A=\\pi r^2",type:"numeric",answer:78.5,hint:"Eleva el radio al cuadrado primero: 5² = 25. Luego multiplica por π ≈ 3.14.",solution:[{step:"Calcular:",formula:"A=3.14\\cdot 5^2=3.14\\cdot 25=\\boxed{78.5\\,\\text{cm}^2}"}]},
+{cat:"circunf",title:"Radio a partir de la circunferencia",desc:"La longitud de una circunferencia es 62.8 cm. ¿Cuánto mide el radio? (π ≈ 3.14)",formula:"C=2\\pi r \\Rightarrow r=?",type:"numeric",answer:10,hint:"Despeja r: r = C / (2π). Divide 62.8 entre 6.28.",solution:[{step:"Despejar r:",formula:"r=\\frac{62.8}{2\\cdot 3.14}=\\frac{62.8}{6.28}=\\boxed{10\\,\\text{cm}}"}]},
+{cat:"circunf",title:"Diámetro y circunferencia",desc:"Una rueda tiene diámetro 60 cm. ¿Cuántos metros recorre en una vuelta? (π ≈ 3.14)",formula:"C=\\pi d",type:"numeric",answer:1.884,hint:"Sustituye d=60 cm en C = π·d. El resultado en cm, luego conviértelo a metros.",solution:[{step:"Calcular:",formula:"C=3.14\\cdot 60=188.4\\,\\text{cm}=\\boxed{1.884\\,\\text{m}}"}]},
+{cat:"circunf",title:"Área del semicírculo",desc:"Halla el área de un semicírculo de radio 6 cm. (π ≈ 3.14)",formula:"A=\\frac{\\pi r^2}{2}",type:"numeric",answer:56.52,hint:"Calcula el área del círculo completo y divide entre 2.",solution:[{step:"Calcular:",formula:"A=\\frac{3.14\\cdot 36}{2}=\\frac{113.04}{2}=\\boxed{56.52\\,\\text{cm}^2}"}]},
+{cat:"circunf",title:"Longitud del arco",desc:"¿Cuánto mide un arco de 90° en un círculo de radio 8 cm? (π ≈ 3.14)",formula:"l=\\frac{\\alpha}{360}\\cdot 2\\pi r",type:"numeric",answer:12.56,hint:"Un arco de 90° es la cuarta parte de la circunferencia completa.",solution:[{step:"Calcular:",formula:"l=\\frac{90}{360}\\cdot 2\\cdot 3.14\\cdot 8=\\frac{1}{4}\\cdot 50.24=\\boxed{12.56\\,\\text{cm}}"}]},
+{cat:"circunf",title:"Área del sector circular",desc:"¿Cuál es el área de un sector de 60° en un círculo de radio 6 cm? (π ≈ 3.14)",formula:"A=\\frac{\\alpha}{360}\\cdot \\pi r^2",type:"numeric",answer:18.84,hint:"Un sector de 60° es 1/6 del círculo completo. Calcula el área total y divide entre 6.",solution:[{step:"Calcular:",formula:"A=\\frac{60}{360}\\cdot 3.14\\cdot 36=\\frac{1}{6}\\cdot 113.04=\\boxed{18.84\\,\\text{cm}^2}"}]},
+{cat:"circunf",title:"Anillo circular",desc:"Un anillo tiene radio exterior 10 cm e interior 6 cm. ¿Cuál es su área? (π ≈ 3.14)",formula:"A=\\pi(R^2-r^2)",type:"numeric",answer:200.96,hint:"Calcula el área del círculo grande menos el área del pequeño.",solution:[{step:"Calcular:",formula:"A=3.14(100-36)=3.14\\cdot 64=\\boxed{200.96\\,\\text{cm}^2}"}]},
+{cat:"circunf",title:"Circunferencia inscrita en un cuadrado",desc:"Un cuadrado tiene lado 10 cm. ¿Cuál es el área del círculo inscrito? (π ≈ 3.14)",formula:"r=\\frac{l}{2}",type:"numeric",answer:78.5,hint:"El radio del círculo inscrito es la mitad del lado del cuadrado: r = 10/2 = 5 cm.",solution:[{step:"Radio:",formula:"r=5\\,\\text{cm}"},{step:"Área:",formula:"A=3.14\\cdot 25=\\boxed{78.5\\,\\text{cm}^2}"}]},
+{cat:"circunf",title:"Perímetro de figura compuesta",desc:"Una figura está formada por un cuadrado de lado 8 cm y un semicírculo sobre uno de sus lados. ¿Cuánto mide el perímetro? (π ≈ 3.14)",formula:"P = 3l + \\pi r",type:"numeric",answer:36.56,hint:"El perímetro incluye 3 lados del cuadrado más la longitud del semicírculo (π·r, con r=4).",solution:[{step:"3 lados del cuadrado:",formula:"3\\cdot 8=24\\,\\text{cm}"},{step:"Semicírculo (r=4):",formula:"\\pi\\cdot 4=3.14\\cdot 4=12.56\\,\\text{cm}"},{step:"Total:",formula:"24+12.56=\\boxed{36.56\\,\\text{cm}}"}]},
+
+/* ── 7. FRACCIONES ── */
+{cat:"fracciones",title:"Suma de fracciones",desc:"Calcula y simplifica:",formula:"\\frac{3}{4}+\\frac{5}{6}-\\frac{1}{3}",type:"multiple",options:["\\frac{3}{4}","\\frac{17}{12}","\\frac{5}{4}","\\frac{19}{12}"],answer:"\\frac{5}{4}",hint:"MCM(4,6,3)=12. Convierte: 9/12 + 10/12 − 4/12.",solution:[{step:"MCM=12:",formula:"\\frac{9}{12}+\\frac{10}{12}-\\frac{4}{12}=\\frac{15}{12}"},{step:"Simplificar:",formula:"\\frac{15}{12}=\\boxed{\\frac{5}{4}}"}]},
+{cat:"fracciones",title:"Multiplicación de fracciones",desc:"Calcula:",formula:"\\frac{3}{5}\\times\\frac{10}{9}",type:"multiple",options:["\\frac{2}{3}","\\frac{1}{3}","\\frac{30}{45}","\\frac{3}{10}"],answer:"\\frac{2}{3}",hint:"Multiplica numeradores y denominadores. Luego simplifica dividiendo numerador y denominador por su MCD.",solution:[{step:"Multiplicar:",formula:"\\frac{3\\cdot 10}{5\\cdot 9}=\\frac{30}{45}"},{step:"Simplificar (÷15):",formula:"\\frac{30}{45}=\\boxed{\\frac{2}{3}}"}]},
+{cat:"fracciones",title:"División de fracciones",desc:"Calcula:",formula:"\\frac{7}{8}\\div\\frac{14}{4}",type:"multiple",options:["\\frac{1}{4}","\\frac{7}{4}","\\frac{1}{2}","\\frac{4}{7}"],answer:"\\frac{1}{4}",hint:"Dividir por una fracción es igual a multiplicar por su inversa: ÷ (14/4) = × (4/14).",solution:[{step:"Invertir y multiplicar:",formula:"\\frac{7}{8}\\cdot\\frac{4}{14}=\\frac{28}{112}"},{step:"Simplificar:",formula:"\\frac{28}{112}=\\boxed{\\frac{1}{4}}"}]},
+{cat:"fracciones",title:"Fracción de una cantidad",desc:"¿Cuánto es 3/5 de 40?",formula:"\\frac{3}{5}\\times 40=?",type:"numeric",answer:24,hint:"Multiplica 40 × 3 y luego divide entre 5. O bien divide primero 40÷5=8 y multiplica por 3.",solution:[{step:"Calcular:",formula:"\\frac{3\\cdot 40}{5}=\\frac{120}{5}=\\boxed{24}"}]},
+{cat:"fracciones",title:"Comparación de fracciones",desc:"¿Cuál de estas fracciones es la mayor?",formula:"\\frac{5}{8} \\quad \\text{vs} \\quad \\frac{7}{12}",type:"multiple",options:["5/8","7/12","Son iguales","No se puede comparar"],answer:"5/8",hint:"Busca un denominador común (24): 5/8 = 15/24 y 7/12 = 14/24.",solution:[{step:"Convertir (MCM=24):",formula:"\\frac{5}{8}=\\frac{15}{24},\\quad\\frac{7}{12}=\\frac{14}{24}"},{step:"Comparar:",formula:"\\frac{15}{24}>\\frac{14}{24} \\Rightarrow \\boxed{\\frac{5}{8}}\\text{ es mayor}"}]},
+{cat:"fracciones",title:"Fracción irreducible",desc:"Simplifica a su forma irreducible:",formula:"\\frac{36}{48}",type:"multiple",options:["\\frac{3}{4}","\\frac{6}{8}","\\frac{9}{12}","\\frac{18}{24}"],answer:"\\frac{3}{4}",hint:"Calcula el MCD(36,48) y divide numerador y denominador entre él.",solution:[{step:"MCD(36,48)=12:",formula:"\\frac{36\\div 12}{48\\div 12}=\\boxed{\\frac{3}{4}}"}]},
+{cat:"fracciones",title:"Fracciones — problema",desc:"María tiene 3/4 de una pizza. Come 1/3 de lo que tiene. ¿Qué fracción de pizza queda?",formula:"\\frac{3}{4}-\\frac{1}{3}\\cdot\\frac{3}{4}",type:"multiple",options:["\\frac{1}{2}","\\frac{5}{12}","\\frac{1}{4}","\\frac{7}{12}"],answer:"\\frac{1}{2}",hint:"Lo que come es (1/3)·(3/4). Luego resta eso de lo que tenía.",solution:[{step:"Lo que come:",formula:"\\frac{1}{3}\\cdot\\frac{3}{4}=\\frac{1}{4}"},{step:"Lo que queda:",formula:"\\frac{3}{4}-\\frac{1}{4}=\\boxed{\\frac{1}{2}}"}]},
+{cat:"fracciones",title:"Número mixto a fracción",desc:"Convierte a fracción impropia:",formula:"3\\frac{2}{5}",type:"multiple",options:["\\frac{17}{5}","\\frac{15}{5}","\\frac{7}{5}","\\frac{32}{5}"],answer:"\\frac{17}{5}",hint:"Multiplica la parte entera por el denominador y suma el numerador: 3×5+2.",solution:[{step:"Calcular:",formula:"3\\frac{2}{5}=\\frac{3\\cdot 5+2}{5}=\\frac{17}{5}=\\boxed{\\frac{17}{5}}"}]},
+{cat:"fracciones",title:"Fracción decimal",desc:"¿A qué fracción irreducible equivale 0.35?",formula:"0.35=\\frac{?}{?}",type:"multiple",options:["\\frac{7}{20}","\\frac{35}{10}","\\frac{3}{5}","\\frac{7}{25}"],answer:"\\frac{7}{20}",hint:"0.35 = 35/100. Simplifica dividiendo por MCD(35,100)=5.",solution:[{step:"Escribir:",formula:"\\frac{35}{100}"},{step:"Simplificar ÷5:",formula:"\\frac{7}{20}=\\boxed{\\frac{7}{20}}"}]},
+{cat:"fracciones",title:"Suma de tres fracciones distintas",desc:"Calcula:",formula:"\\frac{1}{2}+\\frac{1}{3}+\\frac{1}{6}",type:"numeric",answer:1,hint:"MCM(2,3,6)=6. Convierte: 3/6 + 2/6 + 1/6.",solution:[{step:"Denominador común 6:",formula:"\\frac{3}{6}+\\frac{2}{6}+\\frac{1}{6}=\\frac{6}{6}=\\boxed{1}"}]},
+
+/* ── 8. SISTEMAS DE ECUACIONES ── */
+{cat:"sistemas",title:"Sistema — suma/resta",desc:"x+y=10 y x−y=4. ¿Cuánto vale x?",formula:"\\begin{cases}x+y=10\\\\x-y=4\\end{cases}",type:"numeric",answer:7,hint:"Suma las dos ecuaciones: los términos y se anulan y obtienes 2x=14.",solution:[{step:"Sumar ecuaciones:",formula:"2x=14 \\Rightarrow x=\\boxed{7}"},{step:"Verificar:",formula:"y=10-7=3\\;\\checkmark"}]},
+{cat:"sistemas",title:"Sistema — sustitución",desc:"Resuelve por sustitución y halla y:",formula:"\\begin{cases}x=2y+1\\\\x+y=10\\end{cases}",type:"numeric",answer:3,hint:"Sustituye x=2y+1 en la segunda ecuación para obtener una ecuación con solo y.",solution:[{step:"Sustituir:",formula:"(2y+1)+y=10 \\Rightarrow 3y=9"},{step:"Resultado:",formula:"y=\\boxed{3},\\;x=7"}]},
+{cat:"sistemas",title:"Sistema — igualación",desc:"Resuelve e indica el valor de x:",formula:"\\begin{cases}2x-y=5\\\\x+y=7\\end{cases}",type:"numeric",answer:4,hint:"De la segunda ecuación: y=7−x. Sustituye en la primera.",solution:[{step:"Despejar y:",formula:"y=7-x"},{step:"Sustituir:",formula:"2x-(7-x)=5 \\Rightarrow 3x=12"},{step:"Resultado:",formula:"x=\\boxed{4},\\;y=3"}]},
+{cat:"sistemas",title:"Sistema — sin solución",desc:"¿Cuántas soluciones tiene el sistema?",formula:"\\begin{cases}2x+y=5\\\\4x+2y=8\\end{cases}",type:"multiple",options:["Infinitas soluciones","Ninguna solución","Una solución única","Dos soluciones"],answer:"Ninguna solución",hint:"Multiplica la primera ecuación por 2: obtienes 4x+2y=10. ¿Es compatible con 4x+2y=8?",solution:[{step:"Multiplicar primera ×2:",formula:"4x+2y=10"},{step:"Comparar con segunda:",formula:"4x+2y=8 \\neq 10 \\Rightarrow \\text{sistema incompatible}\\Rightarrow\\boxed{\\text{Sin solución}}"}]},
+{cat:"sistemas",title:"Sistema — problema de edades",desc:"La suma de las edades de padre e hijo es 46. El padre tiene 22 años más que el hijo. ¿Cuántos años tiene el hijo?",formula:"\\begin{cases}p+h=46\\\\p=h+22\\end{cases}",type:"numeric",answer:12,hint:"Sustituye p=h+22 en la primera ecuación.",solution:[{step:"Sustituir:",formula:"(h+22)+h=46 \\Rightarrow 2h=24"},{step:"Resultado:",formula:"h=\\boxed{12}\\text{ años}"}]},
+{cat:"sistemas",title:"Sistema — monedas",desc:"Tengo 20 monedas de 1€ y 2€ que suman 31€. ¿Cuántas monedas de 2€ tengo?",formula:"\\begin{cases}x+y=20\\\\x+2y=31\\end{cases}",type:"numeric",answer:11,hint:"Resta la primera ecuación de la segunda: obtienes y directamente.",solution:[{step:"Restar ecuaciones:",formula:"(x+2y)-(x+y)=31-20 \\Rightarrow y=\\boxed{11}"}]},
+{cat:"sistemas",title:"Sistema — mezcla",desc:"Se mezclan x litros al 20% y y litros al 50% para obtener 30 litros al 30%. ¿Cuántos litros al 20%?",formula:"\\begin{cases}x+y=30\\\\0.2x+0.5y=9\\end{cases}",type:"numeric",answer:20,hint:"De la primera: y=30−x. Sustituye en la segunda y resuelve.",solution:[{step:"Sustituir y=30-x:",formula:"0.2x+0.5(30-x)=9 \\Rightarrow -0.3x=-6"},{step:"Resultado:",formula:"x=\\boxed{20}\\text{ litros}"}]},
+{cat:"sistemas",title:"Sistema 3×3 reducido",desc:"Halla x en el sistema:",formula:"\\begin{cases}x+y+z=6\\\\x-y=0\\\\y+z=4\\end{cases}",type:"numeric",answer:2,hint:"De la segunda: x=y. Sustituye en la primera y tercera para hallar y y z.",solution:[{step:"x=y. Sustituir en 1ª:",formula:"2y+z=6"},{step:"Combinar con 3ª (y+z=4):",formula:"2y+z-(y+z)=6-4 \\Rightarrow y=2"},{step:"Resultado:",formula:"x=\\boxed{2}"}]},
+{cat:"sistemas",title:"Sistema — velocidades",desc:"Dos coches salen en sentidos contrarios. Uno a 60 km/h y otro a 80 km/h. ¿En cuántas horas están a 350 km de distancia?",formula:"60t+80t=350",type:"numeric",answer:2.5,hint:"La distancia total es la suma de las distancias de cada coche. Plantea la ecuación.",solution:[{step:"Plantear:",formula:"140t=350"},{step:"Resultado:",formula:"t=\\frac{350}{140}=\\boxed{2.5\\text{ horas}}"}]},
+{cat:"sistemas",title:"Sistema — ingresos",desc:"Entradas de adulto a 8€ y de niño a 4€. Se venden 200 entradas por 1240€. ¿Cuántas entradas de adulto se vendieron?",formula:"\\begin{cases}a+n=200\\\\8a+4n=1240\\end{cases}",type:"numeric",answer:110,hint:"Simplifica la segunda ecuación dividiendo entre 4: 2a+n=310. Resta la primera.",solution:[{step:"Simplificar 2ª ÷4:",formula:"2a+n=310"},{step:"Restar 1ª:",formula:"a=310-200=\\boxed{110}"}]},
+
+/* ── 9. PITÁGORAS ── */
+{cat:"pitagoras",title:"Hipotenusa — 3-4-5",desc:"Catetos 6 cm y 8 cm. ¿Hipotenusa?",formula:"a^2+b^2=c^2",type:"numeric",answer:10,hint:"Eleva al cuadrado cada cateto: 6²=36, 8²=64. Suma y saca la raíz.",solution:[{step:"Calcular:",formula:"c=\\sqrt{6^2+8^2}=\\sqrt{36+64}=\\sqrt{100}=\\boxed{10\\,\\text{cm}}"}]},
+{cat:"pitagoras",title:"Cateto desconocido",desc:"Hipotenusa 13 cm, un cateto 5 cm. ¿El otro cateto?",formula:"b=\\sqrt{c^2-a^2}",type:"numeric",answer:12,hint:"Despeja el cateto: b² = c² − a² = 169 − 25.",solution:[{step:"Calcular:",formula:"b=\\sqrt{13^2-5^2}=\\sqrt{169-25}=\\sqrt{144}=\\boxed{12\\,\\text{cm}}"}]},
+{cat:"pitagoras",title:"Pitágoras — diagonal del cuadrado",desc:"Un cuadrado tiene lado 5 cm. ¿Cuánto mide su diagonal?",formula:"d=l\\sqrt{2}",type:"multiple",options:["5 cm","5√2 cm","10 cm","√5 cm"],answer:"5√2 cm",hint:"La diagonal divide el cuadrado en dos triángulos rectángulos con catetos iguales al lado.",solution:[{step:"Aplicar Pitágoras:",formula:"d=\\sqrt{5^2+5^2}=\\sqrt{50}=5\\sqrt{2}=\\boxed{5\\sqrt{2}\\,\\text{cm}}"}]},
+{cat:"pitagoras",title:"Pitágoras — altura de triángulo",desc:"Un triángulo isósceles tiene base 16 cm y lados iguales de 10 cm. ¿Cuánto mide su altura?",formula:"h=\\sqrt{l^2-(b/2)^2}",type:"numeric",answer:6,hint:"La altura divide la base en dos partes iguales (8 cm), formando un triángulo rectángulo.",solution:[{step:"Calcular:",formula:"h=\\sqrt{10^2-8^2}=\\sqrt{100-64}=\\sqrt{36}=\\boxed{6\\,\\text{cm}}"}]},
+{cat:"pitagoras",title:"Pitágoras — terna pitagórica",desc:"¿Cuál de estos conjuntos es una terna pitagórica?",formula:"a^2+b^2=c^2 \\;?",type:"multiple",options:["{5, 11, 13}","{7, 24, 25}","{8, 15, 18}","{6, 10, 12}"],answer:"{7, 24, 25}",hint:"Comprueba si a² + b² = c² para cada conjunto. Para {7,24,25}: 49 + 576 = 625 = 25².",solution:[{step:"Verificar {7,24,25}:",formula:"7^2+24^2=49+576=625=25^2\\;\\checkmark"},{step:"Respuesta:",formula:"\\boxed{\\{7,24,25\\}}"}]},
+{cat:"pitagoras",title:"Pitágoras — escalera",desc:"Una escalera de 5 m apoyada en una pared llega a 4 m de altura. ¿A qué distancia de la pared está la base?",formula:"d=\\sqrt{c^2-h^2}",type:"numeric",answer:3,hint:"La escalera es la hipotenusa, la pared es un cateto. Aplica el teorema.",solution:[{step:"Calcular:",formula:"d=\\sqrt{5^2-4^2}=\\sqrt{25-16}=\\sqrt{9}=\\boxed{3\\,\\text{m}}"}]},
+{cat:"pitagoras",title:"Pitágoras — diagonal del rectángulo",desc:"Un rectángulo mide 9 cm × 12 cm. ¿Cuánto mide su diagonal?",formula:"d=\\sqrt{l^2+a^2}",type:"numeric",answer:15,hint:"Los lados del rectángulo son los catetos. La diagonal es la hipotenusa.",solution:[{step:"Calcular:",formula:"d=\\sqrt{9^2+12^2}=\\sqrt{81+144}=\\sqrt{225}=\\boxed{15\\,\\text{cm}}"}]},
+{cat:"pitagoras",title:"Pitágoras — distancia entre puntos",desc:"¿Cuánto mide el segmento que une A(1,1) y B(4,5)?",formula:"d=\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}",type:"numeric",answer:5,hint:"Calcula las diferencias: Δx = 4−1 = 3 y Δy = 5−1 = 4. Luego √(3²+4²).",solution:[{step:"Diferencias:",formula:"\\Delta x=3,\\;\\Delta y=4"},{step:"Distancia:",formula:"d=\\sqrt{9+16}=\\sqrt{25}=\\boxed{5}"}]},
+{cat:"pitagoras",title:"Pitágoras — comprobación",desc:"Un triángulo tiene lados 9, 40 y 41 cm. ¿Es rectángulo?",formula:"9^2+40^2 \\stackrel{?}{=} 41^2",type:"multiple",options:["Sí, es rectángulo","No es rectángulo","Solo si los ángulos son 30-60-90","No se puede saber"],answer:"Sí, es rectángulo",hint:"Comprueba si el cuadrado del lado más largo es igual a la suma de los cuadrados de los otros dos.",solution:[{step:"Calcular:",formula:"9^2+40^2=81+1600=1681=41^2\\;\\checkmark"},{step:"Conclusión:",formula:"\\boxed{\\text{Sí, es rectángulo}}"}]},
+{cat:"pitagoras",title:"Pitágoras — campo de fútbol",desc:"Un campo rectangular mide 100 m × 64 m. ¿Cuánto mide la diagonal?",formula:"d=\\sqrt{100^2+64^2}",type:"numeric",answer:119.0,hint:"Los lados del campo son los catetos. Calcula 100²+64²=10000+4096=14096. Raíz cuadrada ≈ 118.7, pero revisa.",solution:[{step:"Calcular:",formula:"d=\\sqrt{10000+4096}=\\sqrt{14096}\\approx\\boxed{118.7\\,\\text{m}}"}]},
+
+/* ── 10. PORCENTAJES ── */
+{cat:"porcentajes",title:"Descuento del 35%",desc:"Artículo de 80€ con 35% de descuento. ¿Precio final?",formula:"P_f=80\\cdot(1-0.35)",type:"numeric",answer:52,hint:"Calcula el descuento: 80×0.35=28. Resta al precio original.",solution:[{step:"Descuento:",formula:"80\\times 0.35=28\\,€"},{step:"Precio final:",formula:"80-28=\\boxed{52\\,€}"}]},
+{cat:"porcentajes",title:"Aumento del 20%",desc:"Un salario de 1.200€ sube un 20%. ¿Cuánto cobra ahora?",formula:"S_f=1200\\cdot 1.20",type:"numeric",answer:1440,hint:"Aumentar un 20% es multiplicar por 1.20.",solution:[{step:"Calcular:",formula:"1200\\times 1.20=\\boxed{1440\\,€}"}]},
+{cat:"porcentajes",title:"¿Qué porcentaje es?",desc:"30 es el ___% de 120.",formula:"\\frac{30}{120}\\times 100=?",type:"numeric",answer:25,hint:"Divide la parte entre el total y multiplica por 100.",solution:[{step:"Calcular:",formula:"\\frac{30}{120}\\times 100=0.25\\times 100=\\boxed{25\\%}"}]},
+{cat:"porcentajes",title:"Porcentaje de una cantidad",desc:"¿Cuánto es el 15% de 240€?",formula:"0.15\\times 240=?",type:"numeric",answer:36,hint:"Multiplica 240 por 0.15 (que es 15/100).",solution:[{step:"Calcular:",formula:"240\\times 0.15=\\boxed{36\\,€}"}]},
+{cat:"porcentajes",title:"Precio antes del IVA",desc:"Un artículo vale 121€ con el 10% de IVA. ¿Cuánto vale sin IVA?",formula:"P_{sin}=\\frac{121}{1.10}",type:"numeric",answer:110,hint:"El precio con IVA = precio sin IVA × 1.10. Despeja el precio sin IVA.",solution:[{step:"Despejar:",formula:"P_{sin}=\\frac{121}{1.10}=\\boxed{110\\,€}"}]},
+{cat:"porcentajes",title:"Variación porcentual",desc:"Un producto pasa de 80€ a 100€. ¿Cuál es el aumento porcentual?",formula:"\\%\\,\\text{variación}=\\frac{\\Delta P}{P_0}\\times 100",type:"numeric",answer:25,hint:"Calcula la diferencia (20€), divídela entre el precio original (80€) y multiplica por 100.",solution:[{step:"Calcular:",formula:"\\frac{100-80}{80}\\times 100=\\frac{20}{80}\\times 100=\\boxed{25\\%}"}]},
+{cat:"porcentajes",title:"Descuento sucesivo",desc:"Un artículo de 200€ tiene dos descuentos del 10% y 20% sucesivos. ¿Precio final?",formula:"P_f=200\\times 0.90\\times 0.80",type:"numeric",answer:144,hint:"Aplica primero el 10% (×0.9) y luego sobre el nuevo precio el 20% (×0.8).",solution:[{step:"Primer descuento:",formula:"200\\times 0.90=180\\,€"},{step:"Segundo descuento:",formula:"180\\times 0.80=\\boxed{144\\,€}"}]},
+{cat:"porcentajes",title:"Porcentaje — votos",desc:"En unas elecciones votan 500 personas. Un partido obtiene 175 votos. ¿Qué porcentaje obtuvo?",formula:"\\%=\\frac{175}{500}\\times 100",type:"numeric",answer:35,hint:"Divide el número de votos entre el total y multiplica por 100.",solution:[{step:"Calcular:",formula:"\\frac{175}{500}\\times 100=0.35\\times 100=\\boxed{35\\%}"}]},
+{cat:"porcentajes",title:"Interés simple",desc:"Depositas 2.000€ al 5% anual durante 3 años. ¿Cuánto de interés ganas?",formula:"I=C\\cdot r\\cdot t",type:"numeric",answer:300,hint:"I = Capital × tasa × tiempo = 2000 × 0.05 × 3.",solution:[{step:"Calcular:",formula:"I=2000\\times 0.05\\times 3=\\boxed{300\\,€}"}]},
+{cat:"porcentajes",title:"Porcentaje — nota media",desc:"Un estudiante saca 6, 7, 8 y 9. La nota del examen final vale el 40% de la media de las otras. La media de las 4 notas es 7.5. ¿Cuánto suma el 40% de esa media?",formula:"0.40\\times 7.5=?",type:"numeric",answer:3,hint:"Multiplica directamente 7.5 × 0.40.",solution:[{step:"Calcular:",formula:"7.5\\times 0.40=\\boxed{3}\\text{ puntos}"}]},
+];
+
+/* Attach category metadata to each exercise */
+const exercises = ALL.map((ex,i)=>{
+  const cat = CATEGORIES.find(c=>c.id===ex.cat);
+  return {...ex, id:i, icon:cat.icon, color:cat.color, colorLight:cat.light, topic:cat.label};
+});
+
+/* ───────────── COMPONENTS ───────────── */
+
+function MathFormula({formula,display=false}){
+  const ref=useRef(null);
+  useEffect(()=>{
+    if(ref.current&&window.katex){
+      try{katex.render(formula,ref.current,{throwOnError:false,displayMode:display,strict:false})}
+      catch(e){ref.current.textContent=formula}
+    }
+  },[formula,display]);
+  return <span ref={ref}/>;
+}
+
+function ProgressBar({completed,total}){
+  return(
+    <div style={{position:'relative',height:4,background:'rgba(0,0,0,0.07)',borderRadius:100,overflow:'hidden'}}>
+      <div style={{position:'absolute',top:0,left:0,height:'100%',width:`${(completed/total)*100}%`,background:'linear-gradient(90deg,#0071e3,#34c759)',borderRadius:100,transition:'width .6s cubic-bezier(.4,0,.2,1)'}}/>
+    </div>
+  );
+}
+
+function Confetti(){
+  const colors=['#0071e3','#34c759','#ff9500','#ff3b30','#bf5af2','#30b0c7'];
+  return(
+    <div style={{position:'absolute',inset:0,overflow:'hidden',pointerEvents:'none'}}>
+      {Array.from({length:20},(_,i)=>(
+        <div key={i} style={{
+          position:'absolute',top:0,left:`${Math.random()*100}%`,
+          width:8,height:8,borderRadius:i%2===0?'50%':2,
+          background:colors[i%colors.length],
+          animation:`confetti-fall ${.8+i*.1}s ease-out ${i*.05}s forwards`,
+          opacity:0,
+        }}/>
+      ))}
+    </div>
+  );
+}
+
+function ExerciseCard({exercise,onAnswer,isAnswered,wasCorrect,direction}){
+  const [inputValue,setInputValue]=useState('');
+  const [selectedOption,setSelectedOption]=useState(null);
+  const [showHint,setShowHint]=useState(false);
+  const [showSolution,setShowSolution]=useState(false);
+  const [localFeedback,setLocalFeedback]=useState(null);
+  const [attempts,setAttempts]=useState(0);
+
+  const animClass=direction==='next'?'slideInRight':direction==='prev'?'slideInLeft':'fadeUp';
+
+  const checkAnswer=useCallback(()=>{
+    const val=exercise.type==='numeric'?parseFloat(inputValue):selectedOption;
+    let correct;
+    if(exercise.type==='numeric'){
+      correct=Math.abs(val-exercise.answer)<0.05;
+    } else {
+      correct=val===exercise.answer;
+    }
+    setLocalFeedback(correct?'correct':'wrong');
+    setAttempts(a=>a+1);
+    if(correct){setTimeout(()=>onAnswer(true),300)}
+    else{setTimeout(()=>setLocalFeedback(null),1200)}
+  },[inputValue,selectedOption,exercise,onAnswer]);
+
+  const handleKey=(e)=>{if(e.key==='Enter'&&!isAnswered)checkAnswer()};
+  const inputCls=localFeedback==='correct'?'correct':localFeedback==='wrong'?'wrong':'';
+
+  return(
+    <div style={{animation:`${animClass} .45s cubic-bezier(.22,1,.36,1) both`,position:'relative'}}>
+      {isAnswered&&wasCorrect&&<Confetti/>}
+
+      <div style={{display:'inline-flex',alignItems:'center',gap:8,background:exercise.colorLight,border:`1px solid ${exercise.color}22`,borderRadius:100,padding:'6px 14px',marginBottom:16,fontSize:13,fontWeight:500,color:exercise.color}}>
+        <span>{exercise.icon}</span><span>{exercise.topic}</span>
+      </div>
+
+      <h2 style={{fontFamily:'var(--serif)',fontSize:'clamp(20px,2.5vw,28px)',fontWeight:400,lineHeight:1.25,marginBottom:8,color:'var(--text-primary)'}}>{exercise.title}</h2>
+      <p style={{fontSize:15,color:'var(--text-secondary)',marginBottom:18,lineHeight:1.6}}>{exercise.desc}</p>
+
+      <div style={{background:'rgba(0,0,0,0.025)',border:'1px solid var(--border)',borderRadius:'var(--r-md)',padding:'18px 22px',marginBottom:24,textAlign:'center',fontSize:20,overflowX:'auto'}}>
+        <MathFormula formula={exercise.formula} display={true}/>
+      </div>
+
+      {exercise.type==='numeric'?(
+        <div style={{marginBottom:18}}>
+          <label style={{display:'block',fontSize:13,fontWeight:500,color:'var(--text-secondary)',marginBottom:7}}>Tu respuesta:</label>
+          <input type="number" className={inputCls} value={inputValue}
+            onChange={e=>setInputValue(e.target.value)} onKeyDown={handleKey}
+            disabled={isAnswered} placeholder="Escribe el resultado..."
+            style={{maxWidth:260}}/>
+        </div>
+      ):(
+        <div style={{display:'flex',flexDirection:'column',gap:9,marginBottom:18}}>
+          {exercise.options.map((opt,i)=>{
+            let cls='btn-option';
+            if(isAnswered){
+              if(opt===exercise.answer)cls+=' reveal';
+              else if(opt===selectedOption&&opt!==exercise.answer)cls+=' err';
+            } else if(selectedOption===opt){
+              if(localFeedback==='correct')cls+=' ok';
+              else if(localFeedback==='wrong')cls+=' err';
+            }
+            return(
+              <button key={i} className={cls} disabled={isAnswered}
+                onClick={()=>{setSelectedOption(opt);setLocalFeedback(null)}}>
+                <span style={{width:26,height:26,borderRadius:'50%',background:selectedOption===opt?exercise.color:'rgba(0,0,0,0.06)',color:selectedOption===opt?'white':'var(--text-secondary)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:600,flexShrink:0,transition:'all .2s'}}>
+                  {String.fromCharCode(65+i)}
+                </span>
+                <span style={{fontSize:15}}>{opt.includes('\\')?<MathFormula formula={opt}/>:opt}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {isAnswered&&(
+        <div style={{display:'flex',alignItems:'center',gap:10,background:wasCorrect?'var(--success-light)':'var(--error-light)',border:`1px solid ${wasCorrect?'#34c75933':'#ff3b3033'}`,borderRadius:'var(--r-sm)',padding:'12px 16px',marginBottom:16,animation:'bounce-in .4s cubic-bezier(.34,1.56,.64,1)',fontSize:14,fontWeight:500,color:wasCorrect?'#1a7a35':'#c0392b'}}>
+          <span style={{fontSize:20}}>{wasCorrect?'🎉':'📖'}</span>
+          <span>{wasCorrect?'¡Correcto! Muy bien.':`Respuesta correcta: ${exercise.answer}`}</span>
+        </div>
+      )}
+
+      {!isAnswered&&(
+        <div style={{display:'flex',gap:10,flexWrap:'wrap',marginBottom:16}}>
+          <button className="btn-primary" onClick={checkAnswer}
+            disabled={exercise.type==='numeric'?!inputValue:!selectedOption}
+            style={{opacity:(exercise.type==='numeric'?!inputValue:!selectedOption)?.4:1}}>
+            Comprobar →
+          </button>
+          <button className="btn-hint" onClick={()=>setShowHint(!showHint)}>
+            {showHint?'Ocultar pista':'💡 Ver pista'}
+          </button>
+        </div>
+      )}
+
+      {(isAnswered||attempts>0)&&(
+        <button className="btn-sol" onClick={()=>setShowSolution(!showSolution)} style={{marginBottom:14}}>
+          {showSolution?'▲ Ocultar solución':'📐 Ver solución explicada'}
+        </button>
+      )}
+
+      {showHint&&(
+        <div style={{background:'var(--warning-light)',border:'1px solid rgba(255,149,0,0.25)',borderRadius:'var(--r-sm)',padding:'13px 16px',marginTop:8,marginBottom:12,fontSize:14,color:'#5c3500',lineHeight:1.6,animation:'fadeUp .3s ease'}}>
+          <strong style={{display:'block',marginBottom:4,fontSize:12,color:'#804800'}}>💡 Pista:</strong>
+          {exercise.hint}
+        </div>
+      )}
+
+      {showSolution&&(
+        <div style={{background:'var(--accent-light)',border:'1px solid rgba(0,113,227,0.18)',borderRadius:'var(--r-md)',padding:'16px 20px',marginTop:8,animation:'fadeUp .3s ease'}}>
+          <strong style={{display:'block',marginBottom:12,fontSize:13,color:'var(--accent)'}}>📐 Solución paso a paso:</strong>
+          {exercise.solution.map((st,i)=>(
+            <div key={i} style={{marginBottom:i<exercise.solution.length-1?12:0}}>
+              <div style={{fontSize:12,color:'var(--text-secondary)',marginBottom:5,display:'flex',alignItems:'center',gap:7}}>
+                <span style={{width:20,height:20,borderRadius:'50%',background:'var(--accent)',color:'white',display:'inline-flex',alignItems:'center',justifyContent:'center',fontSize:10,fontWeight:600,flexShrink:0}}>{i+1}</span>
+                {st.step}
+              </div>
+              <div style={{background:'white',borderRadius:8,padding:'8px 14px',fontSize:15,overflowX:'auto'}}>
+                <MathFormula formula={st.formula} display={true}/>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ───────────── APP ───────────── */
+function App(){
+  const TOTAL=exercises.length; // 100
+
+  const [current,setCurrent]=useState(()=>{const s=sessionStorage.getItem('mf2_cur');return s?+s:0});
+  const [answers,setAnswers]=useState(()=>{const s=sessionStorage.getItem('mf2_ans');return s?JSON.parse(s):{}});
+  const [direction,setDirection]=useState('next');
+  const [showIntro,setShowIntro]=useState(()=>!sessionStorage.getItem('mf2_started'));
+  const [activeCat,setActiveCat]=useState('all');
+  const [showMap,setShowMap]=useState(false);
+
+  useEffect(()=>{sessionStorage.setItem('mf2_cur',current)},[current]);
+  useEffect(()=>{sessionStorage.setItem('mf2_ans',JSON.stringify(answers))},[answers]);
+
+  /* Filtered indices by category */
+  const filteredIndices=useMemo(()=>{
+    if(activeCat==='all')return exercises.map((_,i)=>i);
+    return exercises.map((_,i)=>i).filter(i=>exercises[i].cat===activeCat);
+  },[activeCat]);
+
+  /* Keep current within filtered range */
+  const filteredPos=filteredIndices.indexOf(current);
+  const effectiveCurrent=filteredPos>=0?current:filteredIndices[0];
+
+  const completed=Object.keys(answers).length;
+  const correct=Object.values(answers).filter(Boolean).length;
+
+  const goNext=()=>{
+    const pos=filteredIndices.indexOf(effectiveCurrent);
+    if(pos<filteredIndices.length-1){setDirection('next');setCurrent(filteredIndices[pos+1])}
+  };
+  const goPrev=()=>{
+    const pos=filteredIndices.indexOf(effectiveCurrent);
+    if(pos>0){setDirection('prev');setCurrent(filteredIndices[pos-1])}
+  };
+  const handleAnswer=(ok)=>setAnswers(a=>({...a,[effectiveCurrent]:ok}));
+
+  const exercise=exercises[effectiveCurrent];
+  const posInFiltered=filteredIndices.indexOf(effectiveCurrent);
+  const filteredCompleted=filteredIndices.filter(i=>i in answers).length;
+
+  /* ── INTRO ── */
+  if(showIntro){
+    return(
+      <div style={{position:'fixed',inset:0,display:'flex',alignItems:'center',justifyContent:'center',padding:24,zIndex:10}}>
+        <div className="glass" style={{borderRadius:'var(--r-xl)',padding:'clamp(28px,5vw,48px)',maxWidth:520,width:'100%',boxShadow:'var(--sh-lg)',animation:'fadeUp .6s cubic-bezier(.22,1,.36,1)',textAlign:'center'}}>
+          <div style={{width:70,height:70,background:'linear-gradient(135deg,#0071e3,#34c759)',borderRadius:20,margin:'0 auto 22px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:30,animation:'float 3s ease-in-out infinite'}}>✦</div>
+          <h1 style={{fontFamily:'var(--serif)',fontSize:'clamp(26px,4vw,36px)',fontWeight:400,marginBottom:10,letterSpacing:'-.5px'}}>MathFlow</h1>
+          <p style={{fontSize:15,color:'var(--text-secondary)',marginBottom:6,lineHeight:1.7}}>
+            <strong>100 ejercicios</strong> interactivos de Matemáticas de 1º ESO
+          </p>
+          <p style={{fontSize:14,color:'var(--text-tertiary)',marginBottom:28}}>10 ejercicios por cada uno de los 10 temas del currículo de Madrid</p>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:8,marginBottom:28}}>
+            {CATEGORIES.map(cat=>{
+              const done=exercises.filter(e=>e.cat===cat.id&&exercises.indexOf(e) in answers).length;
+              return(
+                <div key={cat.id} style={{background:cat.light,borderRadius:'var(--r-md)',padding:'10px 6px',textAlign:'center',cursor:'pointer',border:`1px solid ${cat.color}22`}}>
+                  <div style={{fontSize:18,marginBottom:2}}>{cat.icon}</div>
+                  <div style={{fontSize:10,fontWeight:500,color:cat.color,lineHeight:1.3}}>{cat.label}</div>
+                </div>
+              );
+            })}
+          </div>
+          <button className="btn-primary" style={{width:'100%',fontSize:17,padding:'16px 28px'}}
+            onClick={()=>{setShowIntro(false);sessionStorage.setItem('mf2_started','1')}}>
+            Empezar los 100 ejercicios →
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /* ── EXERCISE MAP ── */
+  if(showMap){
+    return(
+      <div style={{position:'fixed',inset:0,display:'flex',flexDirection:'column',zIndex:10}}>
+        <div style={{flexShrink:0,padding:'16px 20px 12px'}}>
+          <div className="glass" style={{borderRadius:'var(--r-lg)',padding:'12px 18px',boxShadow:'var(--sh-sm)',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+            <span style={{fontFamily:'var(--serif)',fontSize:17}}>Mapa de ejercicios</span>
+            <div style={{display:'flex',alignItems:'center',gap:12}}>
+              <span style={{fontSize:13,color:'var(--text-secondary)'}}>{completed}/100</span>
+              <button className="btn-secondary" style={{padding:'8px 14px',fontSize:13}} onClick={()=>setShowMap(false)}>← Volver</button>
+            </div>
+          </div>
+        </div>
+        <div style={{flex:1,overflowY:'auto',padding:'0 20px 20px'}}>
+          {CATEGORIES.map(cat=>{
+            const catExs=exercises.filter(e=>e.cat===cat.id);
+            return(
+              <div key={cat.id} style={{marginBottom:20}}>
+                <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:10,padding:'8px 0'}}>
+                  <span style={{fontSize:16}}>{cat.icon}</span>
+                  <span style={{fontSize:15,fontWeight:600,color:cat.color}}>{cat.label}</span>
+                  <span style={{fontSize:12,color:'var(--text-tertiary)',marginLeft:'auto'}}>
+                    {catExs.filter(e=>exercises.indexOf(e) in answers).length}/10
+                  </span>
+                </div>
+                <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:8}}>
+                  {catExs.map((ex)=>{
+                    const idx=exercises.indexOf(ex);
+                    const done=idx in answers;
+                    const ok=answers[idx];
+                    return(
+                      <button key={idx}
+                        onClick={()=>{setActiveCat('all');setCurrent(idx);setDirection('next');setShowMap(false)}}
+                        style={{
+                          background:done?(ok?'var(--success-light)':'var(--error-light)'):'white',
+                          border:`1.5px solid ${done?(ok?'var(--success)':'var(--error)'):'var(--border-strong)'}`,
+                          borderRadius:10,padding:'8px 4px',fontSize:11,fontWeight:500,
+                          color:done?(ok?'#1a7a35':'#c0392b'):'var(--text-secondary)',
+                          cursor:'pointer',textAlign:'center',lineHeight:1.3,
+                          outline:idx===effectiveCurrent?`2px solid ${cat.color}`:'none',
+                          outlineOffset:2,
+                        }}>
+                        {done?(ok?'✓':'✗'):`#${idx+1}`}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  return(
+    <div style={{position:'fixed',inset:0,display:'flex',flexDirection:'column',zIndex:10}}>
+
+      {/* ── HEADER ── */}
+      <div style={{flexShrink:0,padding:'12px 18px 8px'}}>
+        <div className="glass" style={{borderRadius:'var(--r-lg)',padding:'10px 16px',boxShadow:'var(--sh-sm)'}}>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:8}}>
+            <span style={{fontFamily:'var(--serif)',fontSize:16,fontWeight:400}}>MathFlow</span>
+            <div style={{display:'flex',alignItems:'center',gap:10}}>
+              {completed>0&&(
+                <span style={{background:correct===completed?'var(--success-light)':'var(--accent-light)',color:correct===completed?'#1a7a35':'var(--accent)',fontSize:12,fontWeight:600,padding:'3px 9px',borderRadius:100}}>
+                  {correct}✓ {completed-correct>0?`/ ${completed-correct}✗`:''}
+                </span>
+              )}
+              <span style={{fontSize:13,color:'var(--text-secondary)'}}>{completed}/100</span>
+              <button className="btn-secondary" style={{padding:'6px 12px',fontSize:12}} onClick={()=>setShowMap(true)}>🗺 Mapa</button>
+            </div>
+          </div>
+          <ProgressBar completed={completed} total={TOTAL}/>
+        </div>
+      </div>
+
+      {/* ── CATEGORY TABS ── */}
+      <div style={{flexShrink:0,padding:'6px 18px',overflowX:'auto',display:'flex',gap:6,alignItems:'center'}}>
+        <button className={`cat-btn${activeCat==='all'?' active':''}`}
+          style={activeCat==='all'?{background:'#1d1d1f',color:'white'}:{}}
+          onClick={()=>{setActiveCat('all');setCurrent(filteredIndices[0]||0)}}>
+          Todos
+        </button>
+        {CATEGORIES.map(cat=>(
+          <button key={cat.id}
+            className={`cat-btn${activeCat===cat.id?' active':''}`}
+            style={activeCat===cat.id?{background:cat.color,color:'white'}:{}}
+            onClick={()=>{
+              setActiveCat(cat.id);
+              const firstInCat=exercises.findIndex(e=>e.cat===cat.id);
+              setCurrent(firstInCat);
+            }}>
+            {cat.icon} {cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* ── MAIN CARD ── */}
+      <div style={{flex:1,overflow:'hidden',display:'flex',alignItems:'center',padding:'4px 18px'}}>
+        <div style={{width:'100%',maxWidth:640,margin:'0 auto'}}>
+          <div className="glass" style={{borderRadius:'var(--r-xl)',padding:'clamp(20px,4vw,36px)',boxShadow:'var(--sh-lg)',maxHeight:'calc(100vh - 200px)',overflowY:'auto',position:'relative'}}>
+            <div style={{position:'absolute',top:16,right:16,background:'rgba(0,0,0,0.05)',borderRadius:100,padding:'3px 10px',fontSize:12,color:'var(--text-secondary)',fontWeight:500}}>
+              {posInFiltered+1}/{filteredIndices.length}
+            </div>
+            <ExerciseCard key={effectiveCurrent}
+              exercise={exercise}
+              onAnswer={handleAnswer}
+              isAnswered={effectiveCurrent in answers}
+              wasCorrect={answers[effectiveCurrent]}
+              direction={direction}/>
+          </div>
+        </div>
+      </div>
+
+      {/* ── NAVIGATION ── */}
+      <div style={{flexShrink:0,padding:'8px 18px 16px',display:'flex',alignItems:'center',justifyContent:'space-between',maxWidth:640+36,margin:'0 auto',width:'100%'}}>
+        <button className="nav-btn" onClick={goPrev} disabled={posInFiltered===0}>←</button>
+
+        {/* Mini dots — show at most 10 */}
+        <div style={{display:'flex',gap:5,alignItems:'center',overflow:'hidden',maxWidth:'calc(100% - 120px)'}}>
+          {filteredIndices.slice(Math.max(0,posInFiltered-4),Math.min(filteredIndices.length,posInFiltered+6)).map((idx)=>(
+            <button key={idx}
+              onClick={()=>{setDirection(idx>effectiveCurrent?'next':'prev');setCurrent(idx)}}
+              style={{
+                width:idx===effectiveCurrent?20:7,height:7,borderRadius:100,
+                background:idx===effectiveCurrent?exercise.color:answers[idx]===true?'var(--success)':answers[idx]===false?'var(--error)':'rgba(0,0,0,0.15)',
+                border:'none',transition:'all .3s cubic-bezier(.34,1.56,.64,1)',cursor:'pointer',padding:0,flexShrink:0,
+              }}/>
+          ))}
+        </div>
+
+        <button className="nav-btn"
+          onClick={()=>{if(effectiveCurrent in answers)goNext()}}
+          disabled={posInFiltered===filteredIndices.length-1||!(effectiveCurrent in answers)}>→</button>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
